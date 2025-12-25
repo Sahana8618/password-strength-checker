@@ -1,0 +1,57 @@
+import string
+import time
+import itertoolsssword: ")
+
+# STEP 2: Password strength analysis
+length = len(password)
+has_upper = any(c.isupper() for c in password)
+has_lower = any(c.islower() for c in password)
+has_digit = any(c.isdigit() for c in password)
+has_symbol = any(c in string.punctuation for c in password)
+
+score = 0
+if length >= 8: score += 1
+if has_upper: score += 1
+if has_lower: score += 1
+if has_digit: score += 1
+if has_symbol: score += 1
+
+if score <= 2:
+
+# STEP 1: Take password input
+password = input("Enter your pa
+    print("Password Strength: WEAK")
+elif score <= 4:
+    print("Password Strength: MEDIUM")
+else:
+    print("Password Strength: STRONG")
+
+# STEP 3: Brute-force simulation
+def brute_force(target):
+    characters = string.ascii_letters + string.digits + string.punctuation
+
+    attempts = 0
+    start_time = time.time()
+
+    print("Brute-force started...")  # DEBUG LINE
+
+    for guess_length in range(1, len(target) + 1):
+        for guess_tuple in itertools.product(characters, repeat=guess_length):
+            attempts += 1
+            guess = ''.join(guess_tuple)
+
+            if attempts % 100000 == 0:
+                print("Trying:", guess)
+
+            if guess == target:
+                end_time = time.time()
+                print("\nPassword Cracked!")
+                print("Password:", guess)
+                print("Attempts:", attempts)
+                print("Time Taken:", round(end_time - start_time, 2), "seconds")
+                return
+
+choice = input("Run brute-force simulation? (yes/no): ")
+if choice.lower() == "yes":
+    brute_force(password)
+
